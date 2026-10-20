@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Chess Association - Nexus System Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Rajdhani for Nexus Tech Vibe, Orbitron for headers, JetBrains Mono for codes, Poppins for text) -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --nexus-bg: #0b0f19;
+            --nexus-card: rgba(15, 23, 42, 0.85);
+            --nexus-emerald: #10b981;
+            --nexus-cyan: #06b6d4;
+            --nexus-border: rgba(16, 185, 129, 0.25);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--nexus-bg);
+            color: #F1F5F9;
+            overflow-x: hidden;
+        }
+
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-tech { font-family: 'Rajdhani', sans-serif; }
+        .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+
+        /* TemplateMo 629 Nexus Industrial Background Grid */
+        .nexus-grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+            background-size: 36px 36px;
+        }
+
+        /* Glassmorphism Industrial Cyber Card */
+        .nexus-card {
+            background: rgba(13, 20, 36, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--nexus-border);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        /* Cyberpunk Corner Accents */
+        .nexus-card::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 10px; height: 10px;
+            border-top: 2px solid var(--nexus-emerald);
+            border-left: 2px solid var(--nexus-emerald);
+            pointer-events: none;
+        }
+
+        .nexus-card::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 10px; height: 10px;
+            border-bottom: 2px solid var(--nexus-cyan);
+            border-right: 2px solid var(--nexus-cyan);
+            pointer-events: none;
+        }
+
+        /* Continuous 3D Floating Cyber Frame Animation */
+        @keyframes cyberFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+            50% { transform: translateY(-14px) rotateX(4deg) rotateY(-4deg); }
+        }
+
+        @keyframes neonGlowPulse {
+            0%, 100% { 
+                box-shadow: 0 0 15px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.2); 
+            }
+            50% { 
+                box-shadow: 0 0 35px rgba(6, 182, 212, 0.8), inset 0 0 20px rgba(16, 185, 129, 0.6); 
+            }
+        }
+
+        .nexus-hero-frame {
+            animation: cyberFloat 5s ease-in-out infinite, neonGlowPulse 4s ease-in-out infinite;
+            perspective: 1000px;
+        }
+
+        /* Ambient Scanning Tech Line */
+        .scan-line {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #10b981, #06b6d4, transparent);
+            animation: scanAnim 4s linear infinite;
+        }
+
+        @keyframes scanAnim {
+            0% { top: 0%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #070a12; }
+        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 3px; }
+    </style>
+</head>
+<body class="min-h-screen relative pb-16 nexus-grid-bg text-slate-100">
+
+    <!-- Cyber Background Glows -->
+    <div class="fixed -top-24 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-0 -right-24 w-[30rem] h-[30rem] bg-cyan-500/10 rounded-full blur-[160px] pointer-events-none z-0"></div>
+
+    <!-- Live Toast Container -->
+    <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+    <!-- Header / Nexus System Bar -->
+    <header class="nexus-card sticky top-0 z-40 border-b border-emerald-500/30">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-br from-emerald-500 to-cyan-600 p-2.5 rounded-xl text-slate-950 font-extrabold shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-chess-king text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-orbitron font-extrabold text-base md:text-lg text-white tracking-wider flex items-center gap-2">
+                        PAKISTAN CHESS ASSOCIATION 
+                        <span class="text-[10px] font-mono-code bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/40">SYS // v2.6</span>
+                    </h1>
+                    <p class="text-xs text-emerald-400 font-tech font-semibold tracking-widest uppercase">
+                        Official National Tournament & Registry Portal (پاکستان چیس ایسوسی ایشن)
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button onclick="scrollToVerify()" class="hidden sm:flex items-center space-x-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 px-3 py-2 rounded-xl text-xs font-semibold border border-emerald-500/30 transition">
+                    <i class="fa-solid fa-qrcode text-emerald-400"></i>
+                    <span>Verify Pass (تصدیق)</span>
+                </button>
+                <button onclick="openUploadModal()" class="bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs tracking-wider transition flex items-center space-x-2 shadow-lg shadow-emerald-500/20 font-tech uppercase">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span>Upload Event (ٹورنامنٹ اپلوڈ)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Nexus Industrial Cyber Hero Section -->
+    <section class="max-w-6xl mx-auto px-4 pt-6 relative z-10">
+        <div class="nexus-card p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 border border-emerald-500/30 shadow-2xl relative overflow-hidden">
+            <div class="scan-line"></div>
+            
+            <div class="space-y-3 text-center md:text-left z-10">
+                <div class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-500/40 font-mono-code">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    NEXUS NODE ACTIVE // NATIONAL CHESS REGISTRY
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-orbitron font-extrabold text-white leading-tight uppercase">
+                    Pakistan Chess Championships & League
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-xl font-normal leading-relaxed">
+                    Official FIDE-affiliated digital registry. Register online for championships, check pass verification status, and track live tournament player entries across Pakistan.
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2 text-xs font-tech font-semibold text-slate-400">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-emerald-400"></i> FIDE RECOGNIZED</span>
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-cyan-400"></i> INSTANT DIGITAL PASS</span>
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-database text-blue-400"></i> LIVE ARBITER ENTRY PANELS</span>
+                </div>
+            </div>
+
+            <!-- Animated Chess Image Cyber Frame -->
+            <div class="relative z-10 flex-shrink-0">
+                <div class="nexus-hero-frame relative p-1.5 bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 rounded-2xl">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KybzJyWZMyM_QvhcZJM4Kjqf-BwixxzAsmMKVEfOJg&s" 
+                         alt="Nexus Animated Chess Frame" 
+                         class="w-48 h-32 sm:w-60 sm:h-40 object-cover rounded-xl border border-slate-900 shadow-2xl">
+                    <div class="absolute bottom-2 right-2 bg-slate-950/90 text-emerald-400 font-mono-code text-[10px] px-2 py-0.5 rounded border border-emerald-500/40">
+                        SYS // CHESS_NODE
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Player Verification Section ("Check Pass") -->
+    <section id="verification-section" class="max-w-6xl mx-auto px-4 pt-6 relative z-10">
+        <div class="nexus-card p-5 rounded-2xl border border-emerald-500/30">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg border border-emerald-500/30">
+                        <i class="fa-solid fa-id-card-clip"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white font-orbitron">Check My Registration Pass (رجسٹریشن کی معلومات)</h3>
+                        <p class="text-xs text-slate-400">Enter Phone Number, Email, or Pass ID (e.g. PCA-1042) to check registration status.</p>
+                    </div>
+                </div>
+
+                <div class="flex w-full sm:w-auto gap-2">
+                    <input type="text" id="status-search-query" placeholder="Phone, Email, or PCA-XXXX..." class="bg-slate-950/90 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 w-full sm:w-64 font-mono-code">
+                    <button onclick="checkRegistrationStatus()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5 whitespace-nowrap uppercase font-tech tracking-wider">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Check Pass</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Tournaments Listing -->
+    <main class="max-w-6xl mx-auto px-4 py-6 relative z-10">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold font-orbitron text-white flex items-center gap-2">
+                <i class="fa-solid fa-trophy text-emerald-400"></i> Active National Tournaments (ٹورنامنٹس)
+            </h2>
+            <span class="text-xs font-mono-code bg-slate-900 text-emerald-400 px-3 py-1.5 rounded-full border border-emerald-500/30 font-semibold" id="tournaments-count-badge">0 Events Listed</span>
+        </div>
+
+        <div id="tournaments-list" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Populated dynamically -->
+        </div>
+    </main>
+
+    <!-- Modal: Upload Tournament (Admin / Organizer) -->
+    <div id="upload-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+        <div class="nexus-card rounded-2xl w-full max-w-md p-6 relative border border-emerald-500/40">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-800">
+                <h3 class="text-base font-bold font-orbitron text-white flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-emerald-400"></i> Upload Tournament (نیا ٹورنامنٹ اپلوڈ)
+                </h3>
+                <button onclick="closeUploadModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="upload-form" onsubmit="handleUploadTournament(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Tournament Title (عنوان)</label>
+                    <input type="text" id="t-title" placeholder="e.g. Quetta Open Masters 2026" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">City (شہر)</label>
+                        <input type="text" id="t-city" placeholder="e.g. Quetta" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Date (تاریخ)</label>
+                        <input type="text" id="t-date" placeholder="e.g. 18 Nov 2026" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Prize Pool (انعام)</label>
+                        <input type="text" id="t-prize" placeholder="PKR 250,000" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Entry Fee (فیس)</label>
+                        <input type="text" id="t-fee" placeholder="PKR 1,500" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-2 pt-3">
+                    <button type="button" onclick="closeUploadModal()" class="px-4 py-2 rounded-xl text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold uppercase font-tech tracking-wider">Publish Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Online Registration Form -->
+    <div id="reg-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+        <div class="nexus-card rounded-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto border border-emerald-500/40">
+            <div class="flex justify-between items-center mb-1">
+                <h3 class="text-base font-bold font-orbitron text-white" id="reg-modal-title">Tournament Registration</h3>
+                <button onclick="closeRegModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-400 mb-4">Complete player details for arbiter pairing & verification.</p>
+            
+            <form id="reg-form" onsubmit="handleRegistrationSubmit(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Full Name (پورا نام)</label>
+                    <input type="text" id="reg-name" required placeholder="e.g. Shahzaib Khan" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Email Address (ای میل)</label>
+                    <input type="email" id="reg-email" required placeholder="shahzaib@example.com" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Phone / WhatsApp Number (فون نمبر)</label>
+                    <input type="tel" id="reg-phone" required placeholder="03001234567" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Player Category (کیٹیگری)</label>
+                    <select id="reg-category" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                        <option value="Open Category">Open Category (اوپن کیٹیگری)</option>
+                        <option value="Senior Player (50+ Years)">Senior Player 50+ Years (سینئر کھلاڑی)</option>
+                        <option value="Junior / U-18">Junior U-18 (جونیئر)</option>
+                        <option value="Women Player">Women Player (خواتین)</option>
+                    </select>
+                </div>
+
+                <!-- Dynamic FIDE ID Toggle Box -->
+                <div class="bg-slate-950/80 border border-slate-800 p-3.5 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-semibold text-slate-300">Do you have a FIDE ID? (فائیڈ آئی ڈی)</span>
+                        <input type="checkbox" id="has-fide-checkbox" onchange="toggleFideInput()" class="w-4 h-4 accent-emerald-500 rounded cursor-pointer">
+                    </div>
+                    
+                    <div id="fide-input-container" class="hidden">
+                        <label class="block text-xs text-slate-400 mb-1">FIDE ID Number</label>
+                        <input type="text" id="reg-fide" placeholder="e.g. 421098" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white font-mono-code focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div id="dob-input-container">
+                        <label class="block text-xs text-slate-400 mb-1">Date of Birth (تاريخ پیدائش - Required if no FIDE ID)</label>
+                        <input type="date" id="reg-dob" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-3">
+                    <button type="button" onclick="closeRegModal()" class="px-4 py-2 rounded-xl text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold uppercase font-tech tracking-wider">Submit Registration</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Organizer Entries View & Export Panel -->
+    <div id="entries-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+        <div class="nexus-card rounded-2xl w-full max-w-3xl p-6 relative max-h-[90vh] flex flex-col border border-emerald-500/40">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <div>
+                    <h3 class="text-base font-bold font-orbitron text-white flex items-center gap-2">
+                        <i class="fa-solid fa-users text-emerald-400"></i> <span id="entries-modal-title">Registered Players</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">Arbiter Entry Management System (رجسٹرڈ کھلاڑیوں کی فہرست)</p>
+                </div>
+                <button onclick="closeEntriesModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="py-3 flex flex-col sm:flex-row gap-2 justify-between items-center">
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <input type="text" id="entries-search" oninput="filterEntries()" placeholder="Search name, phone, pass ID..." class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500 w-full sm:w-56 font-mono-code">
+                    <select id="entries-category-filter" onchange="filterEntries()" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                        <option value="ALL">All Categories</option>
+                        <option value="Open Category">Open</option>
+                        <option value="Senior Player (50+ Years)">Senior 50+</option>
+                        <option value="Junior / U-18">Junior U-18</option>
+                        <option value="Women Player">Women</option>
+                    </select>
+                </div>
+                <button onclick="exportEntriesToCSV()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/40 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 w-full sm:w-auto justify-center transition font-tech uppercase tracking-wider">
+                    <i class="fa-solid fa-file-csv"></i> Export CSV (ڈاؤن لوڈ کریں)
+                </button>
+            </div>
+
+            <div id="entries-list-container" class="space-y-2 overflow-y-auto pr-1 flex-1 min-h-[200px]">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Verified Player Digital Pass Overlay -->
+    <div id="pass-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+        <div class="nexus-card rounded-2xl w-full max-w-md p-6 relative border border-emerald-500/50 shadow-2xl">
+            <div class="flex justify-between items-start mb-3">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-emerald-500 text-slate-950 p-1.5 rounded-lg text-xs font-bold font-orbitron">
+                        <i class="fa-solid fa-chess-queen"></i> PCA PASS
+                    </div>
+                    <span class="text-[11px] font-mono-code text-emerald-400">VERIFIED ENTRY ✓</span>
+                </div>
+                <button onclick="closePassModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div id="pass-modal-body" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 relative overflow-hidden">
+                <!-- Content inserted dynamically -->
+            </div>
+
+            <button onclick="closePassModal()" class="w-full mt-4 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 py-2 rounded-xl text-xs font-semibold">Close Pass</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Default Mock Tournament & Registration Data
+        let tournaments = [
+            {
+                id: 1,
+                title: 'National Chess Championship 2026',
+                city: 'Islamabad',
+                date: '15 Nov - 20 Nov 2026',
+                prize: 'PKR 500,000',
+                fee: 'PKR 2,000',
+                entries: [
+                    { regId: 'PCA-8831', name: 'Ahmed Khan', email: 'ahmed@gmail.com', phone: '03001234567', category: 'Open Category', identifier: 'FIDE: 421098', date: '2026-10-18' },
+                    { regId: 'PCA-4192', name: 'Muhammad Ali', email: 'ali@gmail.com', phone: '03219876543', category: 'Senior Player (50+ Years)', identifier: 'DOB: 1970-05-12', date: '2026-10-19' }
+                ]
+            },
+            {
+                id: 2,
+                title: 'Punjab Open Rapid Tournament',
+                city: 'Lahore',
+                date: '05 Dec 2026',
+                prize: 'PKR 150,000',
+                fee: 'PKR 1,000',
+                entries: [
+                    { regId: 'PCA-1049', name: 'Fatima Zafar', email: 'fatima@gmail.com', phone: '03335551122', category: 'Women Player', identifier: 'FIDE: 422110', date: '2026-10-20' }
+                ]
+            },
+            {
+                id: 3,
+                title: 'Quetta Grandmaster Masters 2026',
+                city: 'Quetta',
+                date: '28 Nov 2026',
+                prize: 'PKR 250,000',
+                fee: 'PKR 1,500',
+                entries: [
+                    { regId: 'PCA-7702', name: 'Zubair Baloch', email: 'zubair@gmail.com', phone: '03129998877', category: 'Junior / U-18', identifier: 'DOB: 2009-08-14', date: '2026-10-20' }
+                ]
+            }
+        ];
+
+        let activeTournamentId = null;
+
+        // Render Active Tournaments
+        function renderTournaments() {
+            const listContainer = document.getElementById('tournaments-list');
+            document.getElementById('tournaments-count-badge').innerText = `${tournaments.length} Events Listed`;
+            listContainer.innerHTML = '';
+
+            tournaments.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'nexus-card p-5 rounded-2xl hover:border-emerald-500/60 transition group flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-2 gap-2">
+                            <h3 class="font-orbitron font-bold text-sm sm:text-base text-white group-hover:text-emerald-400 transition">${t.title}</h3>
+                            <span class="bg-emerald-500/10 text-emerald-400 text-xs px-2.5 py-1 rounded-full border border-emerald-500/30 font-tech uppercase font-semibold">
+                                <i class="fa-solid fa-location-dot mr-1"></i>${t.city}
+                            </span>
+                        </div>
+                        <div class="flex items-center text-xs text-slate-400 space-x-4 mb-4">
+                            <span><i class="fa-regular fa-calendar mr-1 text-emerald-400"></i>${t.date}</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-3 flex flex-wrap justify-between items-center gap-2">
+                        <div>
+                            <span class="text-xs text-emerald-400 font-semibold block font-mono-code">Prize: ${t.prize}</span>
+                            <span class="text-[11px] text-slate-400">Fee: ${t.fee}</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="openEntriesModal(${t.id})" class="bg-slate-900 hover:bg-slate-800 text-slate-200 px-3 py-2 rounded-xl text-xs font-semibold transition border border-slate-700 flex items-center gap-1.5">
+                                <i class="fa-solid fa-users text-emerald-400"></i>
+                                <span>Entries</span>
+                                <span class="bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono-code text-[10px] border border-emerald-500/30">${t.entries.length}</span>
+                            </button>
+                            <button onclick="openRegModal(${t.id})" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs tracking-wider transition font-tech uppercase">
+                                Register Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `pointer-events-auto p-3.5 rounded-xl border text-xs font-medium shadow-2xl flex items-center justify-between gap-3 ${
+                type === 'success' 
+                ? 'bg-slate-950/95 border-emerald-500/50 text-emerald-300' 
+                : 'bg-slate-950/95 border-cyan-500/50 text-cyan-300'
+            }`;
+            
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-cyan-400'} text-sm"></i>
+                    <span>${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 4500);
+        }
+
+        // Upload Tournament Modal
+        function openUploadModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
+        function closeUploadModal() { document.getElementById('upload-modal').classList.add('hidden'); document.getElementById('upload-form').reset(); }
+
+        function handleUploadTournament(event) {
+            event.preventDefault();
+            const title = document.getElementById('t-title').value;
+            const newT = {
+                id: Date.now(),
+                title: title,
+                city: document.getElementById('t-city').value,
+                date: document.getElementById('t-date').value,
+                prize: document.getElementById('t-prize').value,
+                fee: document.getElementById('t-fee').value,
+                entries: []
+            };
+            tournaments.push(newT);
+            renderTournaments();
+            closeUploadModal();
+            showToast(`Tournament "${title}" uploaded! (نیا ٹورنامنٹ اپلوڈ ہو گیا)`);
+        }
+
+        // Online Registration Modal & FIDE ID Switch
+        function openRegModal(id) {
+            activeTournamentId = id;
+            const t = tournaments.find(item => item.id === id);
+            document.getElementById('reg-modal-title').innerText = `Register: ${t.title}`;
+            document.getElementById('reg-modal').classList.remove('hidden');
+        }
+
+        function closeRegModal() {
+            document.getElementById('reg-modal').classList.add('hidden');
+            document.getElementById('reg-form').reset();
+            document.getElementById('fide-input-container').classList.add('hidden');
+            document.getElementById('dob-input-container').classList.remove('hidden');
+        }
+
+        function toggleFideInput() {
+            const hasFide = document.getElementById('has-fide-checkbox').checked;
+            if (hasFide) {
+                document.getElementById('fide-input-container').classList.remove('hidden');
+                document.getElementById('dob-input-container').classList.add('hidden');
+            } else {
+                document.getElementById('fide-input-container').classList.add('hidden');
+                document.getElementById('dob-input-container').classList.remove('hidden');
+            }
+        }
+
+        function handleRegistrationSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const phone = document.getElementById('reg-phone').value;
+            const category = document.getElementById('reg-category').value;
+            const hasFide = document.getElementById('has-fide-checkbox').checked;
+            
+            let identifier = hasFide 
+                ? `FIDE: ${document.getElementById('reg-fide').value || 'Pending'}`
+                : `DOB: ${document.getElementById('reg-dob').value || 'N/A'}`;
+
+            const regId = 'PCA-' + Math.floor(1000 + Math.random() * 9000);
+            const today = new Date().toISOString().split('T')[0];
+
+            const tournament = tournaments.find(t => t.id === activeTournamentId);
+            const newEntry = { regId, name, email, phone, category, identifier, date: today };
+            tournament.entries.push(newEntry);
+
+            closeRegModal();
+            renderTournaments();
+
+            showToast(`Registration Successful! Pass ID: ${regId}`);
+            showDigitalPassOverlay(newEntry, tournament.title);
+        }
+
+        // Scroll to Verification Search
+        function scrollToVerify() {
+            document.getElementById('verification-section').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('status-search-query').focus();
+        }
+
+        // Check Pass Registration Search
+        function checkRegistrationStatus() {
+            const query = document.getElementById('status-search-query').value.trim().toLowerCase();
+            if (!query) {
+                showToast('Please enter Phone, Email or Pass ID to verify.', 'info');
+                return;
+            }
+
+            let foundEntry = null;
+            let foundTournamentTitle = '';
+
+            for (const t of tournaments) {
+                const match = t.entries.find(e => 
+                    e.phone.toLowerCase().includes(query) || 
+                    e.email.toLowerCase().includes(query) ||
+                    e.regId.toLowerCase().includes(query)
+                );
+                if (match) {
+                    foundEntry = match;
+                    foundTournamentTitle = t.title;
+                    break;
+                }
+            }
+
+            if (foundEntry) {
+                showDigitalPassOverlay(foundEntry, foundTournamentTitle);
+            } else {
+                showToast('No verified pass found matching your search.', 'info');
+            }
+        }
+
+        // Digital Player Pass Card Overlay
+        function showDigitalPassOverlay(entry, tournamentTitle) {
+            const modalBody = document.getElementById('pass-modal-body');
+            modalBody.innerHTML = `
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <div>
+                        <span class="text-[10px] text-slate-400 block font-tech uppercase">Pass Code (رجسٹریشن کوڈ)</span>
+                        <span class="font-mono-code text-sm font-bold text-emerald-400">${entry.regId}</span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white">${entry.name}</h4>
+                    <p class="text-xs text-slate-400">${tournamentTitle}</p>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-xs pt-1 border-t border-slate-800/60">
+                    <div>
+                        <span class="text-[10px] text-slate-500 block">Category</span>
+                        <span class="text-slate-300 font-medium">${entry.category}</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-500 block">FIDE / DOB</span>
+                        <span class="text-emerald-400 font-mono-code">${entry.identifier}</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-500 block">Phone</span>
+                        <span class="text-slate-300 font-medium">${entry.phone}</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-500 block">Date Issued</span>
+                        <span class="text-slate-300 font-medium">${entry.date}</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('pass-modal').classList.remove('hidden');
+        }
+
+        function closePassModal() { document.getElementById('pass-modal').classList.add('hidden'); }
+
+        // Organizer Entries Modal
+        function openEntriesModal(id) {
+            activeTournamentId = id;
+            const t = tournaments.find(item => item.id === id);
+            document.getElementById('entries-modal-title').innerText = `Entries: ${t.title} (${t.entries.length})`;
+            document.getElementById('entries-search').value = '';
+            document.getElementById('entries-category-filter').value = 'ALL';
+            
+            filterEntries();
+            document.getElementById('entries-modal').classList.remove('hidden');
+        }
+
+        function filterEntries() {
+            const t = tournaments.find(item => item.id === activeTournamentId);
+            const query = document.getElementById('entries-search').value.toLowerCase();
+            const categoryFilter = document.getElementById('entries-category-filter').value;
+            const container = document.getElementById('entries-list-container');
+            container.innerHTML = '';
+
+            const filtered = t.entries.filter(p => {
+                const matchesQuery = p.name.toLowerCase().includes(query) || p.phone.toLowerCase().includes(query) || p.regId.toLowerCase().includes(query);
+                const matchesCategory = categoryFilter === 'ALL' || p.category === categoryFilter;
+                return matchesQuery && matchesCategory;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-400 py-8 text-xs">No entries match your search query.</p>`;
+            } else {
+                filtered.forEach((p, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'bg-slate-950/90 border border-slate-800 p-3 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 hover:border-slate-700 transition';
+                    row.innerHTML = `
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono-code text-[11px] text-emerald-400 font-bold">#${index + 1}</span>
+                                <span class="text-xs text-white font-semibold">${p.name}</span>
+                                <span class="text-[10px] bg-slate-900 text-emerald-300 px-2 py-0.5 rounded font-mono-code border border-emerald-500/30">${p.regId}</span>
+                            </div>
+                            <p class="text-[11px] text-slate-300 mt-0.5">Category: <span class="text-emerald-300 font-medium">${p.category}</span></p>
+                            <p class="text-[11px] text-slate-400">Phone: ${p.phone} | Email: ${p.email}</p>
+                        </div>
+                        <span class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs px-2.5 py-1 rounded-lg font-mono-code">${p.identifier}</span>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+        }
+
+        function closeEntriesModal() { document.getElementById('entries-modal').classList.add('hidden'); }
+
+        // Export Entries CSV
+        function exportEntriesToCSV() {
+            const t = tournaments.find(item => item.id === activeTournamentId);
+            if (!t || t.entries.length === 0) {
+                showToast('No entries available to export.', 'info');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,Pass ID,Full Name,Email,Phone,Category,Identifier,Date Registered\n";
+            t.entries.forEach(e => {
+                csvContent += `"${e.regId}","${e.name}","${e.email}","${e.phone}","${e.category}","${e.identifier}","${e.date}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `${t.title.replace(/[^a-zA-Z0-9]/g, "_")}_Entries.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast(`Exported ${t.entries.length} entries to CSV!`);
+        }
+
+        // Initial Load
+        renderTournaments();
+    </script>
+</body>
+</html>
+
+
+
+
+</body>
+</html>
